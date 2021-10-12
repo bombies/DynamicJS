@@ -8,11 +8,19 @@ module.exports = new Command({
     description: 'Sets the prefix of the bot',
 
     async run(message, args, client) {
-		config.prefix = args[1];
+        const eb = new EmbedBuilder();
+        
+        if (args.length == 0) { 
+            eb.setDescription('You must provide a new prefix');
+            message.reply({ embeds: [eb] });
+            return;
+        }
+
+		config.prefix = args[0];
 
 		GeneralUtils.updateJSONFile('config.json', config);
 
-        const eb = new EmbedBuilder().setDescription(`You have set the prefix of the bot to \`${args[1]}\``);
+        eb.setDescription(`You have set the prefix of the bot to \`${args[0]}\``);
         message.reply({ embeds: [eb] });
     },
 });

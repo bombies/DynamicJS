@@ -35,6 +35,9 @@ client.on('messageCreate', message => {
 
     if (!command) return;
 
+    args.splice(0);
+    console.log(args);
+
     command.run(message, args, client);
 });
 
