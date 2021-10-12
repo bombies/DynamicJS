@@ -11,6 +11,15 @@ class GeneralUtils {
             if (err) return console.log(err);
         });
     }
+
+    /**
+     * 
+     * @param {Number} bound 
+     * @returns 
+     */
+    static getRandomInt(bound) {
+        return Math.floor(Math.random() * bound);
+    }
 }
 
 module.exports = GeneralUtils;
