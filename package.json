@@ -1,0 +1,25 @@
+{
+  "name": "dynamicjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bombies/DynamicJS.git"
+  },
+  "author": "bombies",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bombies/DynamicJS/issues"
+  },
+  "homepage": "https://github.com/bombies/DynamicJS#readme",
+  "dependencies": {
+    "discord.js": "^13.3.0-dev.1633910699.bfb89de"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0"
+  }
+}
