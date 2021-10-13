@@ -1,24 +1,25 @@
 const { MessageEmbed, ColorResolvable } = require('discord.js');
 
 class EmbedBuilder extends MessageEmbed {
+
     /**
      * @type {ColorResolvable}
      */
     static #DEFAULT_COLOR = '';
-    /**
-     * @type {string}
-     */
     static #DEFAULT_TITLE = '';
-    /**
-     * @type {string}
-     */
     static #DEFAULT_FOOTER = '';
+    static #DEFAULT_AUTHOR_NAME = '';
+    static #DEFAULT_AUTHOR_IMAGE = '';
+    static #DEFUALT_AUTHOR_LINK = '';
+    static #DEFAULT_THUMBNAIL = '';
 
     constructor() {
         super();
         this.setColor(EmbedBuilder.#DEFAULT_COLOR);
         this.setTitle(EmbedBuilder.#DEFAULT_TITLE);
         this.setFooter(EmbedBuilder.#DEFAULT_FOOTER);
+        this.setAuthor(EmbedBuilder.#DEFAULT_AUTHOR_NAME, EmbedBuilder.#DEFAULT_AUTHOR_IMAGE, EmbedBuilder.#DEFUALT_AUTHOR_LINK);
+        this.setThumbnail(EmbedBuilder.#DEFAULT_THUMBNAIL);
     }
 
     /**
@@ -38,8 +39,19 @@ class EmbedBuilder extends MessageEmbed {
     /**
      * @param {string} footer
      */
-    static set defaultFooter(footer) {
+    static defaultFooter(footer) {
         EmbedBuilder.#DEFAULT_FOOTER = footer;
+    }
+    
+    /**
+     * @param {string} name
+     * @param {string} image
+     * @param {string} link
+     */
+    static defaultAuthor(name, image = '', link = '') {
+        EmbedBuilder.#DEFAULT_AUTHOR_NAME = name;
+        EmbedBuilder.#DEFAULT_AUTHOR_IMAGE = image;
+        EmbedBuilder.#DEFUALT_AUTHOR_LINK = link;
     }
 }
 
