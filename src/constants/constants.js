@@ -23,6 +23,17 @@ class Constants {
 
         HELP_PAGE_MAX: 10
     }
+
+    static api =  {
+        USER_AGENT: 'Chrome/DynamicJS / bombies#4445'
+    }
+
+    static API_HEADER = {
+        headers: {
+            Accept: 'application/json',
+            'User-Agent': Constants.api.USER_AGENT,
+        },
+    }
 }
 
 module.exports = Constants;
