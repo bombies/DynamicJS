@@ -5,7 +5,11 @@ const GeneralUtils = require("../../utils/generalutils");
 
 module.exports = new Command({
     name: '8ball',
-    description: 'Determine your fate...',
+    help: {
+        description: 'Determine your fate...',
+        usage: '8ball <message>',
+    },
+    permission: "SEND_MESSAGES",
 
     async run(message, args, client) {
         const eb = new EmbedBuilder();

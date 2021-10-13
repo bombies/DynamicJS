@@ -5,7 +5,11 @@ const GeneralUtils = require('../../utils/generalutils');
 
 module.exports = new Command({
     name: 'whois',
-    description: 'Get information about a user',
+    help: {
+        description: 'Get information about a user',
+        usage: `whois <@user>`,
+    },
+    permission: "SEND_MESSAGES",
 
     async run(message, args, client) {
         const eb = new EmbedBuilder();
@@ -62,8 +66,9 @@ module.exports = new Command({
                                 value: roleStr,
                             },
                         );
-                    eb.setThumbnail(member.user.avatarURL());
+                    eb.setThumbnail(member.user.avatarURL({ dynamic: true }));
                     eb.setFooter(`ID: ${member.id}`);
+                    eb.setTimestamp(message.createdTimestamp);
                 });
         } catch ( ex ) {
             console.log(ex);

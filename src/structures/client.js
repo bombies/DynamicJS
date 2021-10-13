@@ -23,13 +23,16 @@ class DiscordClient extends Client {
     start(token) {
         const commands = new Map();
         const events = new Map();
-        commands.set('../src/commands', '../commands/');
-        commands.set('../src/commands/misc', '../commands/misc/');
+        commands.set('./src/commands', '../commands/');
+        commands.set('./src/commands/misc', '../commands/misc/');
+        commands.set('./src/commands/management', '../commands/management/');
+        commands.set('./src/commands/utils', '../commands/utils/');
         for (const [key, value] of commands.entries()) {
             loadCommands(key, value, this);
         }
         
-        events.set('../src/events', '../events/');
+        events.set('./src/events', '../events/');
+        events.set('./src/events/pagination', '../events/pagination/');
         for (const [key, value] of events.entries()) {
             loadEvents(key, value, this);
         }

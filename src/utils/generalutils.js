@@ -1,5 +1,5 @@
 const fs = require('fs');
-const Constants = require('../commands/constatnts/constants');
+const Constants = require('../constants/constants');
 const EmbedBuilder = require('../structures/embedbuilder');
 
 class GeneralUtils {

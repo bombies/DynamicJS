@@ -1,5 +1,6 @@
-const { Client, Message, Interaction } = require('discord.js');
+const { Client, Message, Interaction, PermissionString } = require('discord.js');
 const DiscordClient = require('./client.js');
+const HelpObject = require('./helpObject.js');
 
 /**
  * 
@@ -11,12 +12,13 @@ function RunFunction(message, args, client) {}
 
 class Command {
     /**
-     * @typedef {{name: string, description: string, run: RunFunction}} CommandOptions
+     * @typedef {{name: string, help: HelpObject, permission: PermissionString, run: RunFunction}} CommandOptions
      * @param {CommandOptions} options 
      */
     constructor(options) {
         this.name = options.name;
-        this.description = options.description;
+        this.help = options.help;
+        this.permission = options.permission;
         this.run = options.run;
     }
 }
