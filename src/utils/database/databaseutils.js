@@ -36,29 +36,36 @@ class DatabaseUtils {
      */
     #createTables(database) {
         switch (database) {
-            case Constants.database.main.NAME:
+            case Constants.database.main.NAME: {
                 const mainDb = Constants.database.main;
                 const tables = mainDb.TABLES;
-                const sql = `CREATE TABLE ${tables.BOT_INFO.name} (${tables.BOT_INFO.fields.SERVER_ID} PRIMARY KEY, ${tables.BOT_INFO.fields.PREFIX});`;
-                const sql2 = `CREATE TABLE ${tables.BOT_DEVELOPERS.name} (${tables.BOT_DEVELOPERS.fields.DEVELOPER_ID});`
+                const sql = `CREATE TABLE ${tables.BOT_INFO.name} (${tables.BOT_INFO.fields.SERVER_ID} TEXT PRIMARY KEY, ${tables.BOT_INFO.fields.PREFIX} TEXT);`;
+                const sql2 = `CREATE TABLE ${tables.BOT_DEVELOPERS.name} (${tables.BOT_DEVELOPERS.fields.DEVELOPER_ID} TEXT);`
                 this.db.run(sql, err => {
                     if (err)
                         throw new err;
-                    console.log(`Created the ${tables.BOT_INFO.name} table.`);
                 })
+
                 this.db.run(sql2, err => {
                     if (err)
                         throw new err;
-                    console.log(`Created the ${tables.BOT_DEVELOPERS.name} table.`);
-                    
                 })
 
                 this.db.close(err => {
                     if (err)
                         throw new err;
                 });
-                break;
-        
+            } break;
+            case Constants.database.notes.NAME: {
+                const notesDb = Constants.database.notes;
+                const tables = notesDb.TABLES;
+                const sql = `CREATE TABLE ${tables.USER_NOTES.name} (${tables.USER_NOTES.fields.USER_ID} TEXT, ${tables.USER_NOTES.fields.NOTE} TEXT);`
+                this.db.run(sql, err => {
+                    if (err)
+                        throw err;
+                })
+                this.db.close;
+            } break;
             default:
                 throw new Error(`${database} is an invalid database`);
         }

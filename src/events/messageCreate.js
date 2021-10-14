@@ -11,5 +11,5 @@ module.exports = new Event('messageCreate', (client, message) => {
 
     args.splice(0, 1);
 
-    command.run(message, args, client);
+    command.run(message, args);
 });

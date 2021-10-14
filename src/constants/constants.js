@@ -54,6 +54,18 @@ class Constants {
                     }
                 }
             }
+        },
+        notes: {
+            NAME: 'notes',
+            TABLES: {
+                USER_NOTES: {
+                    name: 'user_notes',
+                    fields: {
+                        USER_ID: 'user_id',
+                        NOTE: 'note',
+                    }
+                }
+            }
         }
     }
 }

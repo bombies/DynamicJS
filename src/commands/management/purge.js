@@ -13,7 +13,7 @@ module.exports = new Command({
     async run(message, args, client) {
         const eb = new EmbedBuilder();
 
-        if (args.length == 0)
+        if (args.length === 0)
             return message.reply({ embeds: [eb.setDescription('You must specifiy how much messages you wish to purge.')] });
 
         const amount = args[0];
