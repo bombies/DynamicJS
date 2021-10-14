@@ -43,7 +43,7 @@ function remove(msg, args) {
     if (args.length < 2)
         return msg.reply({ embeds: [eb.setDescription('You must provide the id of a note to remove!')] });
 
-    const id = args[0];
+    const id = args[1];
 
     if (isNaN(id) || !id)
         return msg.reply({ embeds: [eb.setDescription('You must provide a valid integer as an ID')] });
@@ -62,6 +62,30 @@ function remove(msg, args) {
             return msg.reply({ embeds: [eb.setDescription('Something went wrong when trying to remove your note!')] });
         }
     });
+}
+
+/**
+ *
+ * @param {Message} msg
+ * @returns {Message} Resultant message
+ */
+function removeAll(msg) {
+    const eb = new EmbedBuilder();
+    const noteUtils = new NoteUtils();
+
+    try {
+        noteUtils.getNotes(msg.author.id)
+            .then(notes => {
+                if (notes.length === 0)
+                    return msg.reply({ embeds: [eb.setDescription('You already have no notes!')] });
+
+                noteUtils.removeAllNotes(msg.author.id);
+                return msg.reply({ embeds: [eb.setDescription('You have removed all your notes!')] });
+            });
+    } catch ( ex ) {
+        console.log(ex);
+        return msg.reply({ embeds: [eb.setDescription('Something went wrong when trying to remove your note!')] });
+    }
 }
 
 /**
@@ -87,7 +111,7 @@ module.exports = new Command({
     name: 'notes',
     help: {
         description: 'Manage your personal notes!',
-        usage: 'notes\n' +
+        usage: '\nnotes\n' +
             'notes add <note>\n' +
             'notes remove <id>',
     },
@@ -105,6 +129,9 @@ module.exports = new Command({
                 } break;
                 case 'remove': {
                     await remove(msg, args);
+                } break;
+                case 'removeall': {
+                    await removeAll(msg);
                 } break;
                 default: {
                     msg.reply({ embeds: [eb.setDescription('Invalid usage!\nValid subcommands: `add`, `remove`')] });

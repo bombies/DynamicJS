@@ -60,7 +60,7 @@ class NoteUtils extends DatabaseUtils {
      * So if it is planned to use this object again you must instantiate a new connection to
      * the database using {@link NoteUtils}#createConnection
      * @param {string} uid ID of the user
-     * @returns {string[]} Array of all the notes set by the user
+     * @returns {Promise<string[]>} Array of all the notes set by the user
      */
     async getNotes(uid) {
         return new Promise(((resolve, reject) => {

@@ -50,7 +50,7 @@ class DiscordClient extends Client {
  * 
  * @param {string} path 
  * @param {string} commandFolder
- * @param {Client} client
+ * @param {DiscordClient} client
  */
 function loadCommands(path, commandFolder, client) {
     fs.readdirSync(path)

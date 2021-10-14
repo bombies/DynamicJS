@@ -13,7 +13,7 @@ module.exports = new Command({
     async run(message, args, client) {
         const eb = new EmbedBuilder();
 
-        if (args.length == 0) {
+        if (args.length === 0) {
             const description = [`**Prefix** \`${client.prefix}\`\n`];
             client.commands.forEach(command => {
                 description.push(`- \`${command.name}\``);
