@@ -16,7 +16,7 @@ class BotUtils extends DatabaseUtils {
      */
     addGuild(gid) {
         const table = this.tables.BOT_INFO;
-        const sql = `INSERT INTO ${table.name} (${table.fields.SERVER_ID}, ${table.fields.PREFIX}) VALUES (${gid}, ${config.prefix});`;
+        const sql = `INSERT INTO ${table.name} (${table.fields.SERVER_ID}, ${table.fields.PREFIX}) VALUES (${gid}, '${config.prefix}');`;
         this.db.run(sql, err => {
             if (err)
                 throw err;
