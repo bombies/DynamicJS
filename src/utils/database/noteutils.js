@@ -79,6 +79,10 @@ class NoteUtils extends DatabaseUtils {
             }, 0);
         }));
     }
+
+    createConnection() {
+        super.createConnection(this.name);
+    }
 }
 
 module.exports = NoteUtils;
