@@ -15,7 +15,7 @@ class BotUtils extends DatabaseUtils {
      * @param {string} gid ID of the guild
      */
     addGuild(gid) {
-        const table = this.tables.MAIN_BOT_INFO;
+        const table = this.tables.BOT_INFO;
         const sql = `INSERT INTO ${table.name} (${table.fields.SERVER_ID}, ${table.fields.PREFIX}) VALUES (${gid}, ${config.prefix});`;
         this.db.run(sql, err => {
             if (err)
@@ -29,7 +29,7 @@ class BotUtils extends DatabaseUtils {
      * @param {string} gid ID of the guild
      */
     removeGuild(gid) {
-        const table = this.tables.MAIN_BOT_INFO;
+        const table = this.tables.BOT_INFO;
         const sql = `DELETE FROM ${table.name} WHERE ${table.fields.SERVER_ID}='${gid}';`;
         this.db.run(sql, err => {
             if (err)
@@ -46,7 +46,7 @@ class BotUtils extends DatabaseUtils {
      * @returns {string[]} List of IDs of all the guilds the bot is in
      */
     getGuilds() {
-        const table = this.tables.MAIN_BOT_INFO;
+        const table = this.tables.BOT_INFO;
         const guilds = [];
         const sql = `SELECT ${table.fields.SERVER_ID} FROM ${table.name};`;
         this.db.all(sql, [], (err, rows) => {

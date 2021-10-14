@@ -40,14 +40,14 @@ class Constants {
         main: {
             NAME: 'main',
             TABLES: {
-                MAIN_BOT_INFO: {
+                BOT_INFO: {
                     name: 'bot_info',
                     fields: {
                         SERVER_ID: 'server_id',
                         PREFIX: 'prefix',
                     }
                 },
-                MAIN_BOT_DEVELOPERS: {
+                BOT_DEVELOPERS: {
                     name: 'bot_developers',
                     fields: {
                         DEVELOPER_ID: 'developer_id',

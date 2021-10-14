@@ -39,17 +39,17 @@ class DatabaseUtils {
             case Constants.database.main.NAME:
                 const mainDb = Constants.database.main;
                 const tables = mainDb.TABLES;
-                const sql = `CREATE TABLE ${tables.MAIN_BOT_INFO.name} (${tables.MAIN_BOT_INFO.fields.SERVER_ID} PRIMARY KEY, ${tables.MAIN_BOT_INFO.fields.PREFIX});`;
-                const sql2 = `CREATE TABLE ${tables.MAIN_BOT_DEVELOPERS.name} (${tables.MAIN_BOT_DEVELOPERS.fields.DEVELOPER_ID});`
+                const sql = `CREATE TABLE ${tables.BOT_INFO.name} (${tables.BOT_INFO.fields.SERVER_ID} PRIMARY KEY, ${tables.BOT_INFO.fields.PREFIX});`;
+                const sql2 = `CREATE TABLE ${tables.BOT_DEVELOPERS.name} (${tables.BOT_DEVELOPERS.fields.DEVELOPER_ID});`
                 this.db.run(sql, err => {
                     if (err)
                         throw new err;
-                    console.log(`Created the ${tables.MAIN_BOT_INFO.name} table.`);
+                    console.log(`Created the ${tables.BOT_INFO.name} table.`);
                 })
                 this.db.run(sql2, err => {
                     if (err)
                         throw new err;
-                    console.log(`Created the ${tables.MAIN_BOT_DEVELOPERS.name} table.`);
+                    console.log(`Created the ${tables.BOT_DEVELOPERS.name} table.`);
                     
                 })
 
