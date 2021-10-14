@@ -54,6 +54,39 @@ class GeneralUtils {
     static getDigitsOnly(string) {
         return string.replace(/\D/g, '');
     }
+
+    /**
+     * 
+     * @param {string} dir 
+     * @returns If the passed directory exists
+     */
+    static dirExists(dir) {
+        return fs.existsSync(`./${dir}`);
+    }
+
+    /**
+     * 
+     * @param {string} dir 
+     */
+    static mkdir(dir) {
+        fs.mkdir(dir, err => {
+            if (err)
+            throw err;
+        });
+        console.log(`${dir} created`);
+    }
+
+    /**
+     * 
+     * @param {string} path 
+     */
+    static createNewFile(path) {
+        fs.open(path, 'w', (err, fd) => {
+            if (err)
+                throw err;
+            fs.close(fd);    
+        });
+    }
 }
 
 module.exports = GeneralUtils;

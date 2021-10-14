@@ -23,9 +23,11 @@
     "discord.js": "^13.2.0",
     "node-fetch": "^2.6.5",
     "pino": "^7.0.0-rc.9",
+    "sqlite3": "^5.0.2",
     "utf-8-validate": "^5.0.7"
   },
   "devDependencies": {
-    "eslint": "^8.0.0"
+    "eslint": "^8.0.0",
+    "prettier": "2.4.1"
   }
 }

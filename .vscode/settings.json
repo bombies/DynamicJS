@@ -1,0 +1,17 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "maindb",
+            "database": "${workspaceFolder:DynamicJS}/databases/main.db"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "dynjsmain",
+            "database": "${workspaceFolder:DynamicJS}/databases/main.db"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

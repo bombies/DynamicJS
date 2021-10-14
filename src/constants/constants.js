@@ -34,6 +34,28 @@ class Constants {
             'User-Agent': Constants.api.USER_AGENT,
         },
     }
+
+    static database = {
+        folder: 'databases',
+        main: {
+            NAME: 'main',
+            TABLES: {
+                MAIN_BOT_INFO: {
+                    name: 'bot_info',
+                    fields: {
+                        SERVER_ID: 'server_id',
+                        PREFIX: 'prefix',
+                    }
+                },
+                MAIN_BOT_DEVELOPERS: {
+                    name: 'bot_developers',
+                    fields: {
+                        DEVELOPER_ID: 'developer_id',
+                    }
+                }
+            }
+        }
+    }
 }
 
 module.exports = Constants;
