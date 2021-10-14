@@ -43,20 +43,22 @@ class BotUtils extends DatabaseUtils {
      * Note: before returning the list of guilds the database connection is closed.
      * So if it is planned to use this object again you must instanciate a new connection to 
      * the database using {@link BotUtils}#createConnection
-     * @returns {string[]} List of IDs of all the guilds the bot is in
+     * @returns {Promise<string[]>} List of IDs of all the guilds the bot is in
      */
     getGuilds() {
-        const table = this.tables.BOT_INFO;
-        const guilds = [];
-        const sql = `SELECT ${table.fields.SERVER_ID} FROM ${table.name};`;
-        this.db.all(sql, [], (err, rows) => {
-            if (err)
-                throw err;
-            
-            rows.forEach(row => guilds.push(row.server_id));
-        });
-        this.closeConnection();
-        return guilds;
+        return new Promise(((resolve, reject) => {
+            const table = this.tables.BOT_INFO;
+            const guilds = [];
+            const sql = `SELECT ${table.fields.SERVER_ID} FROM ${table.name};`;
+            this.db.all(sql, [], (err, rows) => {
+                if (err)
+                    throw err;
+
+                rows.forEach(row => guilds.push(row.server_id));
+            });
+            this.closeConnection();
+            resolve(guilds);
+        }));
     }
 
     createConnection() {
