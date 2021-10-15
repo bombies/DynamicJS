@@ -17,7 +17,6 @@ class DiscordClient extends Client {
          * @type {Collection<string, command>}
          */
         this.commands = new Collection();
-        this.prefix = config.prefix;
     }
 
     start(token) {

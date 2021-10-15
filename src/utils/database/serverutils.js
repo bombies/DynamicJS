@@ -1,6 +1,7 @@
 const DatabaseUtils = require("./databaseutils");
 const Constants = require("../../constants/constants");
 const BotUtils = require("./botutils");
+const config = require('../../config.json');
 
 class ServerUtils extends DatabaseUtils {
     constructor() {
@@ -24,10 +25,11 @@ class ServerUtils extends DatabaseUtils {
         return new Promise((resolve, reject) => {
             const table = this.tables.BOT_INFO;
             const fields = table.fields;
-            const sql = `SELECT ${fields.PREFIX} FROM ${table.name} WHERE ${fields.SERVER_ID}='${gid}';`;
+            const sql = `SELECT * FROM ${table.name} WHERE ${fields.SERVER_ID}='${gid}';`;
             this.db.all(sql, [], (err, rows) => {
-                if (!err)
+                if (err)
                     throw err;
+
                 resolve(rows[0].prefix);
             });
         });
@@ -41,7 +43,7 @@ class ServerUtils extends DatabaseUtils {
     setPrefix(gid, prefix) {
         const table = this.tables.BOT_INFO;
         const fields = table.fields;
-        const sql = `UPDATE ${table.name} SET ${fields.PREFIX}='${prefix}' WHERE ${fields.SERVER_ID}='${gid}';`;
+        const sql = `UPDATE ${table.name} SET ${fields.PREFIX}='${prefix}' WHERE ${fields.SERVER_ID}=${gid};`;
         this.db.run(sql, (err) => {
             if (err)
                 throw err;
@@ -50,21 +52,14 @@ class ServerUtils extends DatabaseUtils {
     }
 
     static initPrefixMap() {
-        const botUtils = new BotUtils();
         const serverUtils = new ServerUtils();
-
-        botUtils.getGuilds()
-            .then(guilds => {
-                guilds.forEach(guild => {
-                    serverUtils.getPrefix(guild)
-                        .then(prefix => {
-                            this.#prefixMap.set(guild, prefix);
-                        })
+        BotUtils.getGuilds().forEach(guild => {
+            serverUtils.getPrefix(guild)
+                .then(prefix => {
+                    // serverUtils.closeConnection();
+                    ServerUtils.#prefixMap.set(guild, prefix);
                 })
-            })
-
-        botUtils.closeConnection();
-        serverUtils.closeConnection();
+        });
     }
 
     /**
@@ -72,7 +67,15 @@ class ServerUtils extends DatabaseUtils {
      * @param {string} gid ID of the guild
      */
     static getPrefix(gid) {
-        return this.#prefixMap.get(gid);
+        return ServerUtils.#prefixMap.get(gid);
+    }
+
+    static addGuildToPrefixMap(gid, prefix = '~') {
+        ServerUtils.#prefixMap.set(gid, config.prefix);
+    }
+
+    static removeGuildFromPrefixMap(gid) {
+        ServerUtils.#prefixMap.delete(gid);
     }
 
     createConnection() {

@@ -22,7 +22,8 @@ class BotUtils extends DatabaseUtils {
      */
     addGuild(gid) {
         const table = this.tables.BOT_INFO;
-        const sql = `INSERT INTO ${table.name} (${table.fields.SERVER_ID}, ${table.fields.PREFIX}) VALUES (${gid}, '${config.prefix}');`;
+        const sql = `INSERT INTO ${table.name} (${table.fields.SERVER_ID}, ${table.fields.PREFIX}) VALUES ('${gid}', '${config.prefix}');`;
+
         this.db.run(sql, err => {
             if (err)
                 throw err;
@@ -52,7 +53,7 @@ class BotUtils extends DatabaseUtils {
      * @returns {Promise<string[]>} List of IDs of all the guilds the bot is in
      */
     getGuilds() {
-        return new Promise(((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             const table = this.tables.BOT_INFO;
             const guilds = [];
             const sql = `SELECT ${table.fields.SERVER_ID} FROM ${table.name};`;
@@ -61,24 +62,26 @@ class BotUtils extends DatabaseUtils {
                     throw err;
 
                 rows.forEach(row => guilds.push(row.server_id));
+                resolve(guilds);
             });
-            this.closeConnection();
-            resolve(guilds);
-        }));
+        });
     }
 
-    static initGuildList() {
-        const botUtils = new BotUtils();
-
-        botUtils.getGuilds()
+    static async initGuildList() {
+        const botUtils = await new BotUtils();
+        await botUtils.getGuilds()
             .then(guilds => {
-                console.log(guilds);
-                guilds.forEach(guild => this.#guildList.push(guild))
+                // botUtils.closeConnection();
+                guilds.forEach(guild => BotUtils.#guildList.push(guild))
             });
     }
 
+    /**
+     * Get the cached list of guilds
+     * @returns {string[]} List of guild IDs cached in the bot's memory
+     */
     static getGuilds() {
-        return [...this.#guildList];
+        return [...BotUtils.#guildList];
     }
 
     createConnection() {

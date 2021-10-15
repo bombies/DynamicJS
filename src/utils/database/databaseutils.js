@@ -19,14 +19,17 @@ class DatabaseUtils {
             console.log(`${database}.db created!`);
             dbCreated = false;
         }
-            
 
-        this.db = new sqlite3.Database(databasePath, (err) => {
+        /**
+         *
+         * @type {sqlite3.Database}
+         */
+        this.db = new sqlite3.Database(databasePath, async (err) => {
             if (err)
                 throw err;
-                
+
             if (!dbCreated)
-                this.#createTables(database);
+                await this.#createTables(database);
         });
     }
 
@@ -64,7 +67,7 @@ class DatabaseUtils {
                     if (err)
                         throw err;
                 })
-                this.db.close;
+                this.db.close();
             } break;
             default:
                 throw new Error(`${database} is an invalid database`);
@@ -84,9 +87,6 @@ class DatabaseUtils {
         this.db = new sqlite3.Database(databasePath, (err) => {
             if (err)
                 throw err;
-                
-            if (!dbCreated)
-                this.#createTables(database);
         });
     }
 }

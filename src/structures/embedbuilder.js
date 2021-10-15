@@ -1,11 +1,12 @@
 const { MessageEmbed, ColorResolvable } = require('discord.js');
+const Constants = require("../constants/constants");
 
 class EmbedBuilder extends MessageEmbed {
 
     /**
      * @type {ColorResolvable}
      */
-    static #DEFAULT_COLOR = '';
+    static #DEFAULT_COLOR = Constants.bot.DEF_EMBED_COLOR;
     static #DEFAULT_TITLE = '';
     static #DEFAULT_FOOTER = '';
     static #DEFAULT_AUTHOR_NAME = '';
