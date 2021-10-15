@@ -1,6 +1,6 @@
 const { ButtonInteraction, Message } = require("discord.js");
 const Constants = require("../../constants/constants");
-const EmbedBuilder = require("../../structures/embedbuilder");
+const EmbedBuilder = require("../../structures/embedBuilder");
 const Event = require("../../structures/event");
 const Pages = require('../../utils/pagination/pages');
 

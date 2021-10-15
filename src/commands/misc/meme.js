@@ -1,5 +1,5 @@
 const Command = require("../../structures/command");
-const EmbedBuilder = require("../../structures/embedbuilder");
+const EmbedBuilder = require("../../structures/embedBuilder");
 const axios = require('axios');
 const Constants = require("../../constants/constants");
 

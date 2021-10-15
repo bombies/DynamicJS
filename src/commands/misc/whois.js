@@ -1,7 +1,7 @@
 const { Role } = require('discord.js');
 const Command = require('../../structures/command');
-const EmbedBuilder = require('../../structures/embedbuilder');
-const GeneralUtils = require('../../utils/generalutils');
+const EmbedBuilder = require('../../structures/embedBuilder');
+const GeneralUtils = require('../../utils/generalUtils');
 
 module.exports = new Command({
     name: 'whois',

@@ -1,5 +1,5 @@
 const Constants = require("../../constants/constants");
-const DatabaseUtils = require("./databaseutils");
+const DatabaseUtils = require("./databaseUtils");
 const config = require('../../config.json');
 
 class BotUtils extends DatabaseUtils {

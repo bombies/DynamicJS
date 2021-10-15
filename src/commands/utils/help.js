@@ -1,8 +1,8 @@
 const Command = require("../../structures/command");
-const EmbedBuilder = require('../../structures/embedbuilder');
+const EmbedBuilder = require('../../structures/embedBuilder');
 const Constants = require('../../constants/constants');
 const Pages = require('../../utils/pagination/pages');
-const ServerUtils = require('../../utils/database/serverutils');
+const ServerUtils = require('../../utils/database/serverUtils');
 
 module.exports = new Command({
     name: 'help',

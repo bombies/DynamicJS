@@ -1,5 +1,5 @@
 const Event = require('../structures/event');
-const ServerUtils = require("../utils/database/serverutils");
+const ServerUtils = require("../utils/database/serverUtils");
 
 module.exports = new Event('messageCreate', async (client, message) => {
     const guildPrefix = ServerUtils.getPrefix(message.guild.id);

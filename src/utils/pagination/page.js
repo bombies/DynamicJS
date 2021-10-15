@@ -1,5 +1,5 @@
 const { MessageEmbed } = require("discord.js");
-const EmbedBuilder = require('../../structures/embedbuilder');
+const EmbedBuilder = require('../../structures/embedBuilder');
 
 class Page {
     /**

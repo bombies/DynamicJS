@@ -1,7 +1,7 @@
 const { default: axios } = require("axios");
 const Constants = require("../../constants/constants");
 const Command = require("../../structures/command");
-const EmbedBuilder = require("../../structures/embedbuilder");
+const EmbedBuilder = require("../../structures/embedBuilder");
 
 module.exports = new Command({
     name: 'dadjoke',

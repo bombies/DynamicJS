@@ -1,8 +1,8 @@
 const { Message } = require('discord.js');
 const Command = require('../../structures/command');
-const EmbedBuilder = require("../../structures/embedbuilder");
-const NoteUtils = require('../../utils/database/noteutils');
-const GeneralUtils = require("../../utils/generalutils");
+const EmbedBuilder = require("../../structures/embedBuilder");
+const NoteUtils = require('../../utils/database/noteUtils');
+const GeneralUtils = require("../../utils/generalUtils");
 
 /**
  *

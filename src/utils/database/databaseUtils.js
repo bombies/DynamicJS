@@ -1,5 +1,5 @@
 const Constants = require('../../constants/constants');
-const GeneralUtils = require('../generalutils');
+const GeneralUtils = require('../generalUtils');
 const sqlite3 = require('sqlite3').verbose();
 
 class DatabaseUtils {

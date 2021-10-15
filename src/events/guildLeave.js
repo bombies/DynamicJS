@@ -1,6 +1,6 @@
 const Event = require("../structures/event");
-const BotUtils = require("../utils/database/botutils");
-const ServerUtils = require("../utils/database/serverutils");
+const BotUtils = require("../utils/database/botUtils");
+const ServerUtils = require("../utils/database/serverUtils");
 
 module.exports = new Event('guildDelete', (client, guild) => {
     const botUtils = new BotUtils();

@@ -1,5 +1,5 @@
 const Command = require('../../structures/command.js');
-const EmbedBuilder = require('../../structures/embedbuilder.js');
+const EmbedBuilder = require('../../structures/embedBuilder.js');
 
 module.exports = new Command({
     name: 'ping',

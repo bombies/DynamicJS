@@ -1,4 +1,4 @@
-const DatabaseUtils = require('./databaseutils');
+const DatabaseUtils = require('./databaseUtils');
 const Constants = require("../../constants/constants");
 
 class NoteUtils extends DatabaseUtils {

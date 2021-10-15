@@ -1,7 +1,7 @@
 const Command = require('../../structures/command.js');
 const config = require('../../config.json');
-const EmbedBuilder = require('../../structures/embedbuilder.js');
-const GeneralUtils = require('../../utils/generalutils.js');
+const EmbedBuilder = require('../../structures/embedBuilder.js');
+const GeneralUtils = require('../../utils/generalUtils.js');
 
 module.exports = new Command({
     name: 'setprefix',

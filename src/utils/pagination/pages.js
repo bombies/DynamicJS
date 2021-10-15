@@ -1,6 +1,6 @@
 const { TextBasedChannels, User, MessageActionRow, MessageButton, Message } = require('discord.js');
 const Constants = require('../../constants/constants');
-const EmbedBuilder = require('../../structures/embedbuilder');
+const EmbedBuilder = require('../../structures/embedBuilder');
 const Page = require('./page');
 
 class Pages {
