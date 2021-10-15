@@ -11,6 +11,12 @@ class BotUtils extends DatabaseUtils {
     }
 
     /**
+     *
+     * @type {string[]}
+     */
+    static #guildList = [];
+
+    /**
      * 
      * @param {string} gid ID of the guild
      */
@@ -59,6 +65,20 @@ class BotUtils extends DatabaseUtils {
             this.closeConnection();
             resolve(guilds);
         }));
+    }
+
+    static initGuildList() {
+        const botUtils = new BotUtils();
+
+        botUtils.getGuilds()
+            .then(guilds => {
+                console.log(guilds);
+                guilds.forEach(guild => this.#guildList.push(guild))
+            });
+    }
+
+    static getGuilds() {
+        return [...this.#guildList];
     }
 
     createConnection() {

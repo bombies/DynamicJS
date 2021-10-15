@@ -1,6 +1,12 @@
 const Event = require('../structures/event');
+const ServerUtils = require("../utils/database/serverutils");
 
-module.exports = new Event('messageCreate', (client, message) => {
+module.exports = new Event('messageCreate', async (client, message) => {
+    const guildPrefix = await new ServerUtils()
+        .getPrefix(message.guild.id);
+
+    console.log(guildPrefix);
+
     if (!message.content.startsWith(client.prefix)) return;
 
     const args = message.content.substring(client.prefix.length).split(/ +/);
