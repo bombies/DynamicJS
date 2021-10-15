@@ -24,8 +24,10 @@ module.exports = new Command({
         } else {
             if (client.commands.find(cmd => cmd.name === args[0].toLowerCase())) {
                 const command = client.commands.get(args[0].toLowerCase());
+                const aliases = command.aliases;
                 return message.reply({ embeds: [eb.setDescription(
                     `**Description**: ${command.help.description}
+                    **Aliases**: \`${aliases}\`
                     
                     **Usage**: \`${command.help.usage}\``,
                 ).setAuthor(`Help | [${command.name}]`, Constants.bot.IMAGE_URL)] });

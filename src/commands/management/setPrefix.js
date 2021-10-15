@@ -1,14 +1,14 @@
-const Command = require('../../structures/command.js');
-const config = require('../../config.json');
 const EmbedBuilder = require('../../structures/embedBuilder.js');
-const GeneralUtils = require('../../utils/generalUtils.js');
 const ServerUtils = require("../../utils/database/serverUtils");
+const Command = require("../../structures/command");
 
 module.exports = new Command({
     name: 'setprefix',
+    aliases: ['sp'],
     help: {
         description: 'Set the prefix for the bot',
         usage: 'setprefix <prefix>',
+        aliases: ['sp'],
     },
     permission: "SEND_MESSAGES",
 
