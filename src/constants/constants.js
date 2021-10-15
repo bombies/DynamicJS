@@ -4,11 +4,8 @@ class Constants {
     static bot = {
         NAME: 'DynamicJS',
         IMAGE_URL: 'https://i.imgur.com/vYSqLoc.png',
-        /**
-         * @type {ColorResolvable}
-         */
         DEF_EMBED_COLOR: '#eb34b4',
-        MAX_BULK_DEKETE: 100
+        MAX_BULK_DELETE: 100
     }
     
     static pagination = {

@@ -23,8 +23,8 @@ module.exports = new Command({
 
         const amountParsed = parseInt(amount);
 
-        if (amount > Constants.bot.MAX_BULK_DEKETE)
-            return message.reply({ embeds: [eb.setDescription(`You cannot clear more than ${Constants.bot.MAX_BULK_DEKETE} messages.`)] });
+        if (amount > Constants.bot.MAX_BULK_DELETE)
+            return message.reply({ embeds: [eb.setDescription(`You cannot clear more than ${Constants.bot.MAX_BULK_DELETE} messages.`)] });
         else if (amount <= 0)
             return message.reply({ embeds: [eb.setDescription('You must provide a number greater than 0.')] });
 

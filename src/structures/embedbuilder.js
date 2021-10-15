@@ -3,15 +3,12 @@ const Constants = require("../constants/constants");
 
 class EmbedBuilder extends MessageEmbed {
 
-    /**
-     * @type {ColorResolvable}
-     */
     static #DEFAULT_COLOR = Constants.bot.DEF_EMBED_COLOR;
     static #DEFAULT_TITLE = '';
     static #DEFAULT_FOOTER = '';
     static #DEFAULT_AUTHOR_NAME = '';
     static #DEFAULT_AUTHOR_IMAGE = '';
-    static #DEFUALT_AUTHOR_LINK = '';
+    static #DEFAULT_AUTHOR_LINK = '';
     static #DEFAULT_THUMBNAIL = '';
 
     constructor() {
@@ -19,7 +16,7 @@ class EmbedBuilder extends MessageEmbed {
         this.setColor(EmbedBuilder.#DEFAULT_COLOR);
         this.setTitle(EmbedBuilder.#DEFAULT_TITLE);
         this.setFooter(EmbedBuilder.#DEFAULT_FOOTER);
-        this.setAuthor(EmbedBuilder.#DEFAULT_AUTHOR_NAME, EmbedBuilder.#DEFAULT_AUTHOR_IMAGE, EmbedBuilder.#DEFUALT_AUTHOR_LINK);
+        this.setAuthor(EmbedBuilder.#DEFAULT_AUTHOR_NAME, EmbedBuilder.#DEFAULT_AUTHOR_IMAGE, EmbedBuilder.#DEFAULT_AUTHOR_LINK);
         this.setThumbnail(EmbedBuilder.#DEFAULT_THUMBNAIL);
     }
 
@@ -52,7 +49,7 @@ class EmbedBuilder extends MessageEmbed {
     static defaultAuthor(name, image = '', link = '') {
         EmbedBuilder.#DEFAULT_AUTHOR_NAME = name;
         EmbedBuilder.#DEFAULT_AUTHOR_IMAGE = image;
-        EmbedBuilder.#DEFUALT_AUTHOR_LINK = link;
+        EmbedBuilder.#DEFAULT_AUTHOR_LINK = link;
     }
 }
 
