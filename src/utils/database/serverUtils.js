@@ -48,6 +48,7 @@ class ServerUtils extends DatabaseUtils {
             if (err)
                 throw err;
         });
+        ServerUtils.#prefixMap.set(gid, prefix);
         return this;
     }
 
