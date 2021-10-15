@@ -27,7 +27,7 @@ module.exports = new Command({
                 const aliases = command.aliases;
                 return message.reply({ embeds: [eb.setDescription(
                     `**Description**: ${command.help.description}
-                    **Aliases**: \`${aliases}\`
+                    **Aliases**: \`${(aliases !== undefined ? aliases : `None`)}\`
                     
                     **Usage**: \`${command.help.usage}\``,
                 ).setAuthor(`Help | [${command.name}]`, Constants.bot.IMAGE_URL)] });
