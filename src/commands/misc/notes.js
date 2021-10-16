@@ -109,11 +109,13 @@ async function view(msg) {
 
 module.exports = new Command({
     name: 'notes',
+    aliases: ['note'],
     help: {
         description: 'Manage your personal notes!',
-        usage: '\nnotes\n' +
+        usage: '``\nnotes\n' +
             'notes add <note>\n' +
-            'notes remove <id>',
+            'notes remove <id>`',
+        aliases: ['note'],
     },
 
     async run(msg, args) {

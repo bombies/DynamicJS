@@ -5,9 +5,11 @@ const GeneralUtils = require('../../utils/generalUtils');
 
 module.exports = new Command({
     name: 'whois',
+    aliases: ['userinfo'],
     help: {
         description: 'Get information about a user',
         usage: `whois <@user>`,
+        aliases: ['userinfo'],
     },
     permission: "SEND_MESSAGES",
 

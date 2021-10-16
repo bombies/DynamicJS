@@ -14,7 +14,7 @@ module.exports = new Command({
     async run(message, args, client) {
         const eb = new EmbedBuilder();
 
-        if (args.length == 0) {
+        if (args.length === 0) {
             eb.setDescription('You must provide something I can determine.');
             message.reply({ embeds:[eb] });
             return;
