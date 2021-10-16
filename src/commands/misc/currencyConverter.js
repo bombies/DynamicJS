@@ -37,10 +37,32 @@ module.exports = new Command({
         }
 
         const amount = args[0];
-        const fromCode = args[1];
-        const toCode = args[2];
+        const fromCode = args[1].toLowerCase();
+        const toCode = args[2].toLowerCase();
 
         if (!amount || isNaN(amount))
             return message.reply({ embeds: [eb.setDescription('You must provide a valid number as the amount!')] });
+
+        const codesRequest = await axios.get('https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies.json');
+        const codesRequestData = codesRequest.data;
+        const codes = [];
+
+        for (let key in codesRequestData)
+            codes.push(key);
+
+        if (!codes.includes(fromCode))
+            return message.reply({ embeds: [eb.setDescription(`${fromCode} isn't a valid country code!`)] });
+
+        if (!codes.includes(toCode))
+            return message.reply({ embeds: [eb.setDescription(`${toCode} isn't a valid country code!`)] });
+
+        axios.get(`https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${fromCode}/${toCode}.json`)
+            .then(response => {
+                const data = response.data;
+                const conversion = data[toCode];
+                const convertedAmount =  Number(amount) * Number(conversion);
+
+                return message.reply({ embeds: [eb.setDescription(`**${amount} ${fromCode.toUpperCase()}** is **${convertedAmount} ${toCode.toUpperCase()}**`)] })
+            });
     },
 });
