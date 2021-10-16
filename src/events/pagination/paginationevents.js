@@ -22,35 +22,40 @@ module.exports = new Event('interactionCreate', (client, interaction) => {
         currentPage.set(msg, 0);
     
     const pages = Pages.getPages(msg);
+    try {
+        if (button.customId === `${Constants.pagination.FRONT}${user.id}`) {
+            currentPage.set(msg, 0);
+            button.update({ embeds: [pages[0].embed] });
 
-    if (button.customId === `${Constants.pagination.FRONT}${user.id}`) {
-        currentPage.set(msg, 0);
-        button.update({ embeds: [pages[0].embed] });
+        } else if (button.customId === `${Constants.pagination.PREVIOUS}${user.id}`) {
+            if (currentPage.get(msg) === 0) {
+                button.deferUpdate();
+                return;
+            }
 
-    } else if (button.customId === `${Constants.pagination.PREVIOUS}${user.id}`) {
-        if (currentPage.get(msg) === 0) {
-            button.deferUpdate();
-            return;
+            currentPage.set(msg, currentPage.get(msg) - 1);
+            button.update({ embeds: [pages[currentPage.get(msg)].embed] });
+
+        } else if (button.customId === `${Constants.pagination.NEXT}${user.id}`) {
+            if (currentPage.get(msg) === pages.length - 1) {
+                button.deferUpdate();
+                return;
+            }
+
+            currentPage.set(msg, currentPage.get(msg) + 1);
+            button.update({ embeds: [pages[currentPage.get(msg)].embed] });
+
+        } else if (button.customId === `${Constants.pagination.END}${user.id}`) {
+            currentPage.set(msg, pages.length - 1);
+            button.update({ embeds: [pages[currentPage.get(msg)].embed] });
+
+        } else {
+            eb = new EmbedBuilder().setDescription('You do not have permission to interact with this button.');
+            button.reply({ embeds: [eb], ephemeral: true });
         }
-
-        currentPage.set(msg, currentPage.get(msg) - 1);
-        button.update({ embeds: [pages[currentPage.get(msg)].embed] });
-
-    } else if (button.customId === `${Constants.pagination.NEXT}${user.id}`) {
-        if (currentPage.get(msg) === pages.length - 1) {
-            button.deferUpdate();
-            return;
-        }
-
-        currentPage.set(msg, currentPage.get(msg) + 1);
-        button.update({ embeds: [pages[currentPage.get(msg)].embed] });
-        
-    } else if (button.customId === `${Constants.pagination.END}${user.id}`) {
-        currentPage.set(msg, pages.length - 1);
-        button.update({ embeds: [pages[currentPage.get(msg)].embed] });
-
-    } else {
-        eb = new EmbedBuilder().setDescription('You do not have permission to interact with this button.');
-        button.reply({ embeds: [eb], ephemeral: true });
+    } catch ( ex ) {
+        if (!(ex instanceof TypeError))
+            console.log(ex);
+        // Error ignored if it's a TypeError. Most likely trying to interact with a button that doesn't exist anymore.
     }
 });
