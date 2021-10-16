@@ -2,6 +2,8 @@ const Command = require("../../structures/command");
 const EmbedBuilder = require("../../structures/embedBuilder");
 const axios = require("axios");
 const Pages = require("../../utils/pagination/pages");
+const GeneralUtils = require("../../utils/generalUtils");
+const Constants = require("../../constants/constants");
 
 module.exports = new Command({
     name: 'currencyconverter',
@@ -15,7 +17,7 @@ module.exports = new Command({
     },
 
     async run(message, args, client) {
-        const eb = new EmbedBuilder();
+        const eb = new EmbedBuilder().setAuthor('Currency Converter', Constants.bot.IMAGE_URL);
 
         if (args.length >= 1 && args.length < 3) {
             if (args[0].toLowerCase() === 'codes') {
@@ -62,7 +64,8 @@ module.exports = new Command({
                 const conversion = data[toCode];
                 const convertedAmount =  Number(amount) * Number(conversion);
 
-                return message.reply({ embeds: [eb.setDescription(`**${amount} ${fromCode.toUpperCase()}** is **${convertedAmount} ${toCode.toUpperCase()}**`)] })
+                return message.reply({ embeds: [eb.setDescription(`**$${GeneralUtils.formatNumber(Number(amount))} 
+                ${fromCode.toUpperCase()}** is **$${GeneralUtils.formatNumber(convertedAmount)} ${toCode.toUpperCase()}**`)] });
             });
     },
 });

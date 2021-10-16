@@ -6,6 +6,7 @@ const ServerUtils = require("../utils/database/serverUtils");
 const BotUtils = require("../utils/database/botUtils");
 
 module.exports = new Event('ready',  (client) => {
+    GeneralUtils.setDefaultEmbed();
     BotUtils.initGuildList()
         .then(() => {
             ServerUtils.initPrefixMap();

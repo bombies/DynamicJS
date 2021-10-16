@@ -29,6 +29,16 @@ class GeneralUtils {
     }
 
     /**
+     *
+     * @param {Number} num
+     * @param {Number} minDp
+     * @param {Number} maxDp
+     */
+    static formatNumber(num, minDp = 2, maxDp = 2) {
+        return num.toLocaleString('en-US', { minimumFractionDigits: minDp, maximumFractionDigits: maxDp });
+    }
+
+    /**
      * 
      * @param {string} authorName 
      * @param {string} authorImage 
