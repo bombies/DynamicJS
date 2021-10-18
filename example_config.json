@@ -1,0 +1,6 @@
+{
+  // The bot's secret token
+  "token": "TOKEN",
+  // The default prefix for the bot
+  "prefix": "PREFIX"
+}
