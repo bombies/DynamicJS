@@ -1,6 +1,7 @@
 const Command = require("../../structures/command");
 const EmbedBuilder = require("../../structures/embedBuilder");
 const axios = require("axios");
+const { Message } = require('discord.js');
 const Pages = require("../../utils/pagination/pages");
 const GeneralUtils = require("../../utils/generalUtils");
 const Constants = require("../../constants/constants");
@@ -58,14 +59,19 @@ module.exports = new Command({
         if (!codes.includes(toCode))
             return message.reply({ embeds: [eb.setDescription(`${toCode} isn't a valid country code!`)] });
 
+        /**
+         *
+         * @type {Message}
+         */
+        const thinkingMessage = await message.reply({ embeds: [eb.setDescription("Thinking...")] });
+
         axios.get(`https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${fromCode}/${toCode}.json`)
             .then(response => {
                 const data = response.data;
                 const conversion = data[toCode];
                 const convertedAmount =  Number(amount) * Number(conversion);
 
-                return message.reply({ embeds: [eb.setDescription(`**$${GeneralUtils.formatNumber(Number(amount))} 
-                ${fromCode.toUpperCase()}** is **$${GeneralUtils.formatNumber(convertedAmount)} ${toCode.toUpperCase()}**`)] });
+                thinkingMessage.edit({ embeds: [eb.setDescription(`**$${GeneralUtils.formatNumber(Number(amount))} ${fromCode.toUpperCase()}** is **$${GeneralUtils.formatNumber(convertedAmount)} ${toCode.toUpperCase()}**`)] });
             });
     },
 });
