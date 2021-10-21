@@ -89,13 +89,16 @@ async function remove(message, args, client) {
 
     await role.delete();
 
-    config.removeRole(guild.id, role.id);
+    const roleObj = await config.getRoleFromID(guild.id, args[1]);
+    const reaction = roleObj['reaction'];
+    config.getMessage(guild.id, client, serverMsg => {
+        const reactionToRemove = serverMsg.reactions.cache.find(msgReaction => msgReaction.emoji.name === reaction);
+        reactionToRemove.remove();
+        config.removeRole(guild.id, role.id);
+    });
 
     message.reply({ embeds: [eb.setDescription(`You have successfully removed the \`${role.name}\` role!`)] });
-
     updateMessage(config, guild, client);
-    updateReactions(config, guild, client);
-
 }
 
 /**
@@ -109,7 +112,11 @@ function updateMessage(config, guild, client) {
     config.getMessage(guild.id, client, message => {
         config.getRoles(guild.id, roles => {
             let description = '';
-            roles.forEach(role => description += `${role.reaction} **${role.name}**\n`);
+            if (roles.length > 0)
+                roles.forEach(role => description += `${role.reaction} **${role.name}**\n`);
+            else
+                description = '⚠️  There are no roles as yet!\n*Roles will appear here once more has been added.*';
+
             message.edit({ embeds: [eb.setDescription(description)] });
         });
     });
