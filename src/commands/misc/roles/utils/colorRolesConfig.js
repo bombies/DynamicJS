@@ -6,16 +6,19 @@ const FileHandlingError = require("../../../../exceptions/FileHandlingError");
 class ColorRolesConfig extends JSONConfig {
     constructor() {
         super(Constants.json.config.files.COLORED_ROLES);
-        this.initConfig();
+        return (() => {
+            this.initConfig();
+        })();
     }
 
     async initConfig() {
         try {
             this.makeFile();
         } catch (ex) {
-            if (ex instanceof FileHandlingError)
+            if (ex instanceof FileHandlingError) {
+                this.#updateFile();
                 return;
-            console.log(ex);
+            }
         }
 
         let configDefault = {};
@@ -34,19 +37,49 @@ class ColorRolesConfig extends JSONConfig {
             });
     }
 
+    #updateFile() {
+        this.getJSONObject(async object => {
+            const botUtils = new BotUtils();
+            await botUtils.getGuilds()
+                .then(guilds => {
+                    guilds.forEach(guild => {
+                        if (!object[guild]) {
+                            object[guild] = {
+                                roles: [],
+                                channel_id: null,
+                                message_id: null,
+                            };
+                        }
+                    })
+                }).then(async () => {
+                    await this.setJSON(object)
+            });
+
+        })
+    }
+
     /**
      * Check if the message channel for a specific guild has already been set
      * @param {string} guildID
      * @return {Promise<Boolean>} Returns true if the channel has already been initialized and vice versa.
      */
-    channelIsInit(guildID) {
+    channelIsInitAsync(guildID) {
         return new Promise(resolve => {
             this.getJSONObject(object => {
                 resolve(object[guildID]['channel_id'] != null);
             });
         })
+    }
 
-
+    /**
+     *
+     * @param {string} guildID
+     * @param {Function} callback
+     */
+    channelIsInit(guildID, callback) {
+       this.getJSONObject(object => {
+           callback(object[guildID]['channel_id'] != null)
+       })
     }
 
     /**
@@ -66,11 +99,24 @@ class ColorRolesConfig extends JSONConfig {
     /**
      *
      * @param {string} guildID
-     * @return {string | null}
+     * @param {Function} callback
      */
-    getChannel(guildID) {
+    getChannel(guildID, callback) {
         this.getJSONObject(object => {
-            return object[guildID]['channel_id'];
+            callback(object[guildID]['channel_id']);
+        });
+    }
+
+    /**
+     *
+     * @param guildID
+     * @return {Promise<string>}
+     */
+    async getChannelAsync(guildID) {
+        return new Promise(resolve => {
+            this.getJSONObject(object => {
+                resolve(object[guildID]['channel_id']);
+            });
         });
     }
 
@@ -106,6 +152,25 @@ class ColorRolesConfig extends JSONConfig {
     }
 
     /**
+     *
+     * @param {string} guildID
+     * @param {DiscordClient} client
+     * @return {Promise<Message>}
+     */
+    getMessageAsync(guildID, client) {
+        return new Promise(resolve => {
+            this.getJSONObject(async object => {
+                const messageID = object[guildID]['message_id'];
+                const channelID = object[guildID]['channel_id'];
+                const guild = await client.guilds.fetch(guildID);
+                const channel = await guild.channels.fetch(channelID);
+                const message = await channel.messages.fetch(messageID);
+                resolve(message);
+            });
+        });
+    }
+
+    /**
      * Get the role object for a specific guild
      * @param {string} guildID
      * @param {Function} callback
@@ -121,7 +186,6 @@ class ColorRolesConfig extends JSONConfig {
      *
      * @param {string} guildID
      * @param {Function} callback
-     * @return {Object[]} Roles object
      */
     getReactions(guildID, callback) {
         this.getJSONObject(object => {
@@ -129,6 +193,21 @@ class ColorRolesConfig extends JSONConfig {
             object[guildID]['roles'].forEach(role => roles.push(role.reaction));
             callback(roles);
         })
+    }
+
+    /**
+     *
+     * @param guildID
+     * @return {Promise<string[]>}
+     */
+    async getReactionsAsync(guildID) {
+        return new Promise(resolve => {
+           this.getJSONObject(object => {
+               const roles = [];
+               object[guildID]['roles'].forEach(role => roles.push(role.reaction));
+               resolve(roles);
+           })
+        });
     }
 
     /**

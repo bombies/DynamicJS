@@ -13,8 +13,28 @@ module.exports = new Event('ready',  (client) => {
             ServerUtils.initPrefixMap();
 
             const colorRolesConfig = new ColorRolesConfig();
+            const botUtils = new BotUtils();
 
-            await colorRolesConfig.initConfig();
+
+            // Caching the needed messages.
+            const guilds = await botUtils.getGuilds();
+            for (const guild of guilds) {
+                colorRolesConfig.channelIsInit(guild, isInit => {
+                    if (isInit) {
+                        colorRolesConfig.getChannelAsync(guild)
+                            .then(channelID => {
+                                colorRolesConfig.getMessageAsync(guild, client)
+                                    .then(message => {
+                                        client.channels.cache.get(channelID).messages.cache.get(message.id);
+                                    });
+                            });
+                    }
+                });
+            }
+            // for (let guild in guilds) {
+
+
+            // }
         }).finally(() => {
             console.log("Bot is ready to go!");
         });
