@@ -4,6 +4,31 @@ const EmbedBuilder = require('../structures/embedBuilder');
 
 class GeneralUtils {
     /**
+     *
+     * @param {string} arg
+     */
+    static isHex(arg) {
+        return arg.match(/^#[0-9a-fA-F]{6}$/g);
+    }
+
+    /**
+     *
+     * @param {string} arg
+     */
+    static isEmoji(arg) {
+        return arg.match(Constants.bot.EMOJI_REGEX);
+    }
+
+    /**
+     *
+     * @param {string} prefix
+     * @param {string} string
+     */
+    static emojiPrefix(prefix, string) {
+        return prefix + '**‖**  ' + string;
+    }
+
+    /**
      * 
      * @param {string} fileName 
      * @param {File} file 
@@ -70,7 +95,7 @@ class GeneralUtils {
      * @param {string} dir 
      * @returns If the passed directory exists
      */
-    static dirExists(dir) {
+    static pathExists(dir) {
         return fs.existsSync(`./${dir}`);
     }
 
@@ -81,9 +106,8 @@ class GeneralUtils {
     static mkdir(dir) {
         fs.mkdir(dir, err => {
             if (err)
-            throw err;
+                throw err;
         });
-        console.log(`${dir} created`);
     }
 
     /**

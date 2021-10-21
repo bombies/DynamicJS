@@ -8,13 +8,14 @@ class DatabaseUtils {
      * @param {string} database
      */
     constructor(database) {
-        if (!GeneralUtils.dirExists(Constants.database.folder))
+        "use strict";
+        if (!GeneralUtils.pathExists(Constants.database.folder))
             GeneralUtils.mkdir(Constants.database.folder);
 
         const databasePath = `./${Constants.database.folder}/${database}.db`;
         let dbCreated = true;
 
-        if (!GeneralUtils.dirExists(databasePath)) {
+        if (!GeneralUtils.pathExists(databasePath)) {
             GeneralUtils.createNewFile(databasePath);
             console.log(`${database}.db created!`);
             dbCreated = false;
@@ -38,6 +39,7 @@ class DatabaseUtils {
      * @param {string} database 
      */
     #createTables(database) {
+        "use strict";
         switch (database) {
             case Constants.database.main.NAME: {
                 const mainDb = Constants.database.main;

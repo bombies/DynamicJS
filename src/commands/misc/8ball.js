@@ -12,6 +12,7 @@ module.exports = new Command({
     permission: "SEND_MESSAGES",
 
     async run(message, args, client) {
+        "use strict";
         const eb = new EmbedBuilder();
 
         if (args.length === 0) {

@@ -24,6 +24,7 @@ class DiscordClient extends Client {
         const events = new Map();
         commands.set('./src/commands', '../commands/');
         commands.set('./src/commands/misc', '../commands/misc/');
+        commands.set('./src/commands/misc/roles', '../commands/misc/roles/');
         commands.set('./src/commands/management', '../commands/management/');
         commands.set('./src/commands/utils', '../commands/utils/');
         for (const [key, value] of commands.entries()) {

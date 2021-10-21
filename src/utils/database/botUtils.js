@@ -21,6 +21,7 @@ class BotUtils extends DatabaseUtils {
      * @param {string} gid ID of the guild
      */
     addGuild(gid) {
+        "use strict";
         const table = this.tables.BOT_INFO;
         const sql = `INSERT INTO ${table.name} (${table.fields.SERVER_ID}, ${table.fields.PREFIX}) VALUES ('${gid}', '${config.prefix}');`;
 
@@ -36,6 +37,7 @@ class BotUtils extends DatabaseUtils {
      * @param {string} gid ID of the guild
      */
     removeGuild(gid) {
+        "use strict";
         const table = this.tables.BOT_INFO;
         const sql = `DELETE FROM ${table.name} WHERE ${table.fields.SERVER_ID}='${gid}';`;
         this.db.run(sql, err => {
@@ -53,6 +55,7 @@ class BotUtils extends DatabaseUtils {
      * @returns {Promise<string[]>} List of IDs of all the guilds the bot is in
      */
     getGuilds() {
+        "use strict";
         return new Promise((resolve, reject) => {
             const table = this.tables.BOT_INFO;
             const guilds = [];
@@ -68,6 +71,7 @@ class BotUtils extends DatabaseUtils {
     }
 
     static async initGuildList() {
+        "use strict";
         const botUtils = await new BotUtils();
         await botUtils.getGuilds()
             .then(guilds => {
