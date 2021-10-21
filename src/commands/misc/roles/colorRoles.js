@@ -11,13 +11,13 @@ const GeneralUtils = require("../../../utils/generalUtils");
 async function init(message) {
     const channel = message.channel;
     const guild = message.guild;
-    const config = new ColorRolesConfig();
+    const config = await new ColorRolesConfig();
     const eb = new EmbedBuilder();
 
     const rolesMessage = await channel.send({ embeds: [eb.setDescription('⚠️  There are no roles as yet!\n*Roles will appear here once more has been added.*')] });
 
     config.setChannel(guild.id, channel.id, () => {
-        config.setMessage(guild.id, rolesMessage.id);
+        config.setMessage(guild.id, rolesMessage.id, () => message.delete());
     });
 }
 
@@ -33,7 +33,7 @@ async function add(message, args, client) {
     const guild = message.guild;
     const config = new ColorRolesConfig();
 
-    if (!await config.channelIsInit(guild.id))
+    if (!await config.channelIsInitAsync(guild.id))
         return message.reply({ embeds: [eb.setDescription('You must initialize a channel before you can run this command! `roles init`')] });
 
     if (args.length < 4)
@@ -73,7 +73,7 @@ async function remove(message, args, client) {
     const guild = message.guild;
     const config = new ColorRolesConfig();
 
-    if (!await config.channelIsInit(guild.id))
+    if (!await config.channelIsInitAsync(guild.id))
         return message.reply({ embeds: [eb.setDescription('You must initialize a channel before you can run this command! `roles init`')] });
 
     if (args.length < 2)
@@ -89,13 +89,23 @@ async function remove(message, args, client) {
 
     await role.delete();
 
-    config.removeRole(guild.id, role.id);
+    const roleObj = await config.getRoleFromID(guild.id, args[1]);
+    const reaction = roleObj['reaction'];
+    config.getMessage(guild.id, client, serverMsg => {
+        const reactionToRemove = serverMsg.reactions.cache.find(msgReaction => msgReaction.emoji.name === reaction);
+        reactionToRemove.remove();
+        config.removeRole(guild.id, role.id);
+    });
 
     message.reply({ embeds: [eb.setDescription(`You have successfully removed the \`${role.name}\` role!`)] });
-
     updateMessage(config, guild, client);
-    updateReactions(config, guild, client);
+}
 
+async function fix(message, client) {
+    const config = new ColorRolesConfig();
+    updateMessage(config, message.guild, client);
+    updateReactions(config, message.guild, client);
+    await message.react('✅');
 }
 
 /**
@@ -109,7 +119,11 @@ function updateMessage(config, guild, client) {
     config.getMessage(guild.id, client, message => {
         config.getRoles(guild.id, roles => {
             let description = '';
-            roles.forEach(role => description += `${role.reaction} **${role.name}**\n`);
+            if (roles.length > 0)
+                roles.forEach(role => description += `${role.reaction} **${role.name}**\n`);
+            else
+                description = '⚠️  There are no roles as yet!\n*Roles will appear here once more has been added.*';
+
             message.edit({ embeds: [eb.setDescription(description)] });
         });
     });
@@ -168,6 +182,9 @@ module.exports = new Command({
                 break;
             case "remove":
                 await remove(message, args, client);
+                break;
+            case "fix":
+                await fix(message, client);
                 break;
         }
 
