@@ -91,9 +91,9 @@ class BotUtils extends DatabaseUtils {
     /**
      *
      * @param {string} uid
-     * @returns BotUtils
+     * @returns Promise<BotUtils>
      */
-    addDeveloper(uid) {
+    async addDeveloper(uid) {
         const table = this.tables.BOT_DEVELOPERS;
         const sql = `INSERT INTO ${table.name}(${table.fields.DEVELOPER_ID}) VALUES('${uid}');`;
 
@@ -107,9 +107,9 @@ class BotUtils extends DatabaseUtils {
     /**
      *
      * @param {string} uid
-     * @returns {BotUtils}
+     * @returns {Promise<BotUtils>}
      */
-    removeDeveloper(uid) {
+    async removeDeveloper(uid) {
         const table = this.tables.BOT_DEVELOPERS;
         const sql = `DELETE FROM ${table.name} WHERE ${table.fields.DEVELOPER_ID}='${uid}'`
 
