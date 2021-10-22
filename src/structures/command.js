@@ -12,14 +12,14 @@ function RunFunction(message, args, client) {}
 
 class Command {
     /**
-     * @typedef {{name: string, aliases?: string[], help: HelpObject, permission: PermissionString, run: RunFunction}} CommandOptions
+     * @typedef {{name: string, aliases?: string[], help?: HelpObject, permission?: PermissionString, run: RunFunction}} CommandOptions
      * @param {CommandOptions} options 
      */
     constructor(options) {
         this.name = options.name;
-        this.aliases = options.aliases;
-        this.help = options.help;
-        this.permission = options.permission;
+        this.aliases = options?.aliases;
+        this.help = options?.help;
+        this.permission = options?.permission;
         this.run = options.run;
     }
 }

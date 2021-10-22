@@ -64,7 +64,7 @@ class BotUtils extends DatabaseUtils {
                 if (err)
                     throw err;
 
-                rows.forEach(row => guilds.push(row.server_id));
+                rows.forEach(row => guilds.push(row[table.fields.SERVER_ID]));
                 resolve(guilds);
             });
         });
@@ -86,6 +86,69 @@ class BotUtils extends DatabaseUtils {
      */
     static getGuilds() {
         return [...BotUtils.#guildList];
+    }
+
+    /**
+     *
+     * @param {string} uid
+     * @returns BotUtils
+     */
+    addDeveloper(uid) {
+        const table = this.tables.BOT_DEVELOPERS;
+        const sql = `INSERT INTO ${table.name}(${table.fields.DEVELOPER_ID}) VALUES('${uid}');`;
+
+        this.db.run(sql, err => {
+            if (err)
+                throw err;
+        })
+        return this;
+    }
+
+    /**
+     *
+     * @param {string} uid
+     * @returns {BotUtils}
+     */
+    removeDeveloper(uid) {
+        const table = this.tables.BOT_DEVELOPERS;
+        const sql = `DELETE FROM ${table.name} WHERE ${table.fields.DEVELOPER_ID}='${uid}'`
+
+        this.db.run(sql, err => {
+            if (err)
+                throw err;
+        })
+
+        return this;
+    }
+
+    /**
+     *
+     * @returns {Promise<string[]>}
+     */
+    getDevelopers() {
+        return new Promise(resolve => {
+            const table = this.tables.BOT_DEVELOPERS;
+            const sql = `SELECT * FROM ${table.name}`;
+            const developers = [];
+
+            this.db.all(sql, [], (err, rows) => {
+                if (err)
+                    throw err;
+
+                rows.forEach(row => developers.push(row[table.fields.DEVELOPER_ID]))
+                resolve(developers);
+            })
+        });
+    }
+
+    /**
+     *
+     * @param {string} uid
+     * @returns {Promise<boolean>}
+     */
+    async isDeveloper(uid) {
+        const developers = await this.getDevelopers();
+        return developers.includes(uid);
     }
 
     createConnection() {

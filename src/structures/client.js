@@ -27,6 +27,7 @@ class DiscordClient extends Client {
         commands.set('./src/commands/misc', '../commands/misc/');
         commands.set('./src/commands/misc/roles', '../commands/misc/roles/');
         commands.set('./src/commands/management', '../commands/management/');
+        commands.set('./src/commands/dev', '../commands/dev/');
         commands.set('./src/commands/utils', '../commands/utils/');
         for (const [key, value] of commands.entries()) {
             loadCommands(key, value, this);
