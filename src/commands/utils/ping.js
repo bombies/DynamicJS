@@ -12,8 +12,8 @@ module.exports = new Command({
     async run(message, args, client) {
         
         const eb = new EmbedBuilder();
-        eb.setDescription(`🏓 Ping : \`${client.ws.ping} ms\``);
+        const msgPing = Date.now() - message.createdTimestamp;
+        eb.setDescription(`🏓 Ping : \`${client.ws.ping} ms\`\n\n**Message Ping**: \`${msgPing} ms\``);
         message.reply({ embeds: [eb] });
-
     },
 });
