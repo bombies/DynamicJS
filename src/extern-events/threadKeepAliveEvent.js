@@ -14,16 +14,16 @@ class ThreadLife {
         this.threadID = threadID;
     }
 
-    keepAlive() {
-        this.revive();
+    async keepAlive() {
+        await this.revive();
         setInterval(() => this.revive(), 86400000);
     }
 
     async revive() {
-       this.#fetchThread().then(channel => {
-           channel.send('Kept alive!')
+        this.#fetchThread().then(thread => {
+            thread.send('Kept alive!')
                 .then(msg => msg.delete());
-       })
+        }) 
     }
 
     /**
@@ -31,8 +31,10 @@ class ThreadLife {
      * @returns {Promise<ThreadChannel>} The thread channel object
      */
     async #fetchThread() {
-        return this.guild.channels.fetch(this.channelID)
-            .then(channel => channel.threads.cache.find(thread => thread.id === this.threadID));
+        const channel = await this.guild.channels.fetch(this.channelID);
+        const thread = await channel.threads.fetch(this.threadID);
+
+        return thread;
     }
 }
 

@@ -36,13 +36,8 @@ module.exports = new Event("ready", (client) => {
 
       client.guilds.fetch('304828928223084546')
         .then(guild => {
-            guild.channels.fetch('897167117135278110')
-                .then(channel => {
-                    channel.threads.fetch('909487309836140586')
-                        .then(thread => {
-                            thread.send('Kept alive!').then(msg => msg.delete());
-                        });
-                });
+            const keepReactJSThreadAlive = new ThreadLife(guild, '897167117135278110', '909487309836140586');
+            keepReactJSThreadAlive.keepAlive();
         });
     })
     .finally(() => {
