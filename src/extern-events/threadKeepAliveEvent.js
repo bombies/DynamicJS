@@ -5,10 +5,12 @@ class ThreadLife {
     /**
      * 
      * @param {Guild} guild 
+     * @param {String} channelID 
      * @param {String} threadID 
      */
-    constructor(guild, threadID) {
+    constructor(guild, channelID, threadID) {
         this.guild = guild;
+        this.channelID = channelID;
         this.threadID = threadID;
     }
 
@@ -29,7 +31,8 @@ class ThreadLife {
      * @returns {Promise<ThreadChannel>} The thread channel object
      */
     async #fetchThread() {
-        return this.guild.channels.fetch(this.threadID);
+        return this.guild.channels.fetch(this.channelID)
+            .then(channel => channel.threads.cache.find(thread => thread.id === this.threadID));
     }
 }
 
