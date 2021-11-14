@@ -34,21 +34,16 @@ module.exports = new Event("ready", (client) => {
         });
       }
 
-      for (const guild in guilds) {
-        console.log(guild);
-        let guildObj = client.guilds.cache.find(
-          (guild_var) => guild_var.id == guild,
-        );
-        
-        if (guildObj === "304828928223084546") {
-          console.log("Keeping thread alive");
-          let keepReactJSThreadAlive = new ThreadLife(
-            guildObj,
-            "909487309836140586",
-          );
-          keepReactJSThreadAlive.keepAlive();
-        }
-      }
+      client.guilds.fetch('304828928223084546')
+        .then(guild => {
+            guild.channels.fetch('897167117135278110')
+                .then(channel => {
+                    channel.threads.fetch('909487309836140586')
+                        .then(thread => {
+                            thread.send('Kept alive!').then(msg => msg.delete());
+                        });
+                });
+        });
     })
     .finally(() => {
       console.log("Bot is ready to go!");
