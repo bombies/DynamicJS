@@ -5,6 +5,7 @@ const DatabaseUtils = require('../utils/database/databaseUtils.js');
 const ServerUtils = require("../utils/database/serverUtils");
 const BotUtils = require("../utils/database/botUtils");
 const ColorRolesConfig = require("../commands/misc/roles/utils/colorRolesConfig");
+const ThreadLife = require('../extern-events/threadKeepAliveEvent.js');
 
 module.exports = new Event('ready',  (client) => {
     GeneralUtils.setDefaultEmbed();
@@ -31,10 +32,17 @@ module.exports = new Event('ready',  (client) => {
                     }
                 });
             }
-            // for (let guild in guilds) {
 
-
-            // }
+            for (let guild in guilds) {
+                client.guilds.fetch(guild)
+                    .then(guildObj => {
+                        if (guild === '304828928223084546') {
+                            let keepReactJSThreadAlive = new ThreadLife(guildObj, '909487309836140586');
+                            keepReactJSThreadAlive.keepAlive();
+                        }
+                    });
+            }
+            
         }).finally(() => {
             console.log("Bot is ready to go!");
         });
