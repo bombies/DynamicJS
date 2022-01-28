@@ -1,8 +1,9 @@
 const Event = require('../structures/event');
 const ServerUtils = require("../utils/database/serverUtils");
+const config = require('../../config.json');
 
 module.exports = new Event('messageCreate', (client, message) => {
-    const guildPrefix = ServerUtils.getPrefix(message.guild.id);
+    const guildPrefix = config.prefix;
 
     if (!message.content.startsWith(guildPrefix)) return;
 

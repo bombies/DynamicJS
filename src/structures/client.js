@@ -2,7 +2,7 @@ const { Client, Intents, Collection } = require('discord.js');
 const command = require('./command.js');
 const Event = require('./event.js');
 const fs = require('fs');
-const config = require('../config.json');
+const config = require('../../config.json');
 
 class DiscordClient extends Client {
     constructor() {

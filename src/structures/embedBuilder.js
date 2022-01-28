@@ -15,8 +15,12 @@ class EmbedBuilder extends MessageEmbed {
         super();
         this.setColor(EmbedBuilder.#DEFAULT_COLOR);
         this.setTitle(EmbedBuilder.#DEFAULT_TITLE);
-        this.setFooter(EmbedBuilder.#DEFAULT_FOOTER);
-        this.setAuthor(EmbedBuilder.#DEFAULT_AUTHOR_NAME, EmbedBuilder.#DEFAULT_AUTHOR_IMAGE, EmbedBuilder.#DEFAULT_AUTHOR_LINK);
+        this.setFooter({ text: EmbedBuilder.#DEFAULT_FOOTER });
+        this.setAuthor({
+            name: EmbedBuilder.#DEFAULT_AUTHOR_NAME,
+            url: EmbedBuilder.#DEFAULT_AUTHOR_IMAGE,
+            iconURL: EmbedBuilder.#DEFAULT_AUTHOR_LINK
+        });
         this.setThumbnail(EmbedBuilder.#DEFAULT_THUMBNAIL);
     }
 

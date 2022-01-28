@@ -1,7 +1,7 @@
 const DatabaseUtils = require("./databaseUtils");
 const Constants = require("../../constants/constants");
 const BotUtils = require("./botUtils");
-const config = require('../../config.json');
+const config = require('../../../config.json');
 
 class ServerUtils extends DatabaseUtils {
     constructor() {

@@ -1,7 +1,7 @@
 const Command = require("../../structures/command");
 const EmbedBuilder = require("../../structures/embedBuilder");
 const BotUtils = require("../../utils/database/botUtils");
-const config = require('../../config.json');
+const config = require('../../../config.json');
 const GeneralUtils = require("../../utils/generalUtils");
 const Constants = require("../../constants/constants");
 

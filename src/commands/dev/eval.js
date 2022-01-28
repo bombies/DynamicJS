@@ -1,5 +1,5 @@
 const Command = require("../../structures/command");
-const config = require('../../config.json');
+const config = require('../../../config.json');
 const EmbedBuilder = require("../../structures/embedBuilder");
 
 const clean = async (text) => {
