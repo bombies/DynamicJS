@@ -30,7 +30,10 @@ module.exports = new Command({
                     **Aliases**: \`${(aliases !== undefined ? aliases : `None`)}\`
                     
                     **Usage**: \`${command.help.usage}\``,
-                ).setAuthor(`Help | [${command.name}]`, Constants.bot.IMAGE_URL)] });
+                ).setAuthor({
+                    name: `Help | [${command.name}]`,
+                    iconURL: Constants.bot.IMAGE_URL
+                })] });
             } else
                 return message.reply({ embeds: [eb.setDescription(`\`${args[0]}\` isn't a valid command`)] });
         }

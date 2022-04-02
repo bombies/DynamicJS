@@ -64,11 +64,13 @@ class ColorRolesConfig extends JSONConfig {
      * @return {Promise<Boolean>} Returns true if the channel has already been initialized and vice versa.
      */
     channelIsInitAsync(guildID) {
-        return new Promise(resolve => {
-            this.getJSONObject(object => {
-                resolve(object[guildID]['channel_id'] != null);
-            });
-        })
+        try {
+            return new Promise(resolve => {
+                this.getJSONObject(object => {
+                    resolve(object[guildID]['channel_id'] != null);
+                });
+            })
+        } catch ( ex ) {}
     }
 
     /**
@@ -77,9 +79,11 @@ class ColorRolesConfig extends JSONConfig {
      * @param {Function} callback
      */
     channelIsInit(guildID, callback) {
-       this.getJSONObject(object => {
-           callback(object[guildID]['channel_id'] != null)
-       })
+        try {
+            this.getJSONObject(object => {
+                callback(object[guildID]['channel_id'] != null)
+            })
+        } catch ( ex ) {}
     }
 
     /**

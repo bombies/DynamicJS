@@ -3,6 +3,8 @@ const command = require('./command.js');
 const Event = require('./event.js');
 const fs = require('fs');
 const config = require('../../config.json');
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v9');
 
 class DiscordClient extends Client {
     constructor() {
@@ -36,6 +38,8 @@ class DiscordClient extends Client {
         events.set('./src/events', '../events/');
         events.set('./src/events/pagination', '../events/pagination/');
         events.set('./src/events/ColoredRoles', '../events/ColoredRoles/');
+        events.set('./src/events/interactions', '../events/interactions/');
+        events.set('./src/events/interactions/slashcommands', '../events/interactions/slashcommands/');
         for (const [key, value] of events.entries()) {
             loadEvents(key, value, this);
         }
@@ -45,7 +49,7 @@ class DiscordClient extends Client {
                 game: { name: 'Developer: bombies#4445' },
                 status: 'online',
             });
-        });
+        }).then(token => loadSlashCommands(this));
     }
 }
 
@@ -65,6 +69,42 @@ function loadCommands(path, commandFolder, client) {
             const command = require(commandFolder + `${file}`);
             client.commands.set(command.name, command);
         });
+}
+
+/**
+ * 
+ * @param {DiscordClient} client 
+ */
+function loadSlashCommands(client) {
+    const commands = [];
+    const commandFiles = fs.readdirSync('./src/commands/slash')
+        .filter(file => file.endsWith('.js'));
+    
+    for (const file of commandFiles) {
+        const command = require(`../commands/slash/${file}`)
+        commands.push(command.data.toJSON())
+    }
+
+    const rest = new REST({ version: '9' }).setToken(config.token);
+
+    if (commands.length == 0) return;
+
+    (async () => {
+        try {
+            client.guilds.fetch()
+                .then(guilds => {
+                    guilds.forEach(guild => {
+                        rest.put(
+                            Routes.applicationGuildCommands(client.application.id, guild.id),
+                            { body: commands },
+                        ).catch(err => console.log(`There was an error when trying to create slash commands in ${guild.name}`));
+                    })
+                })
+            
+        } catch ( ex ) {
+            console.error(ex);
+        }
+    })();
 }
 
 /**
