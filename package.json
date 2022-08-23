@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/bombies/DynamicJS#readme",
   "dependencies": {
-    "@discordjs/rest": "^0.3.0",
+    "@discordjs/rest": "^1.1.0",
     "axios": "^0.26.1",
     "canvacord": "^5.2.3",
     "chart.js": "^3.6.0",
