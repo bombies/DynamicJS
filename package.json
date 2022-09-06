@@ -21,7 +21,7 @@
     "axios": "^0.26.1",
     "canvacord": "^5.2.3",
     "chart.js": "^3.6.0",
-    "discord-api-types": "^0.31.1",
+    "discord-api-types": "^0.37.7",
     "discord.js": "^13.2.0",
     "namemc": "^1.8.16",
     "node-fetch": "^3.0.0",
